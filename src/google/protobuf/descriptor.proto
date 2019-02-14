@@ -323,6 +323,13 @@ message FileOptions {
   // domain names.
   optional string java_package = 1;
 
+  // Java Bean style of Get/Set Methods
+  enum JavaBeanStyle {
+    DEFAULT_INSTANCE = 1;   // Returns a default instance value, set throws NPE if passed null
+    FAIL_FAST = 2;          // Set and Get throw a Null Pointer Exception if the value is null
+    NULL_CLEAR = 3;         // Get returns null, set accepts null and clears the value
+  }
+  optional JavaBeanStyle java_bean_style = 2 [default=DEFAULT_INSTANCE];
 
   // If set, all the classes from the .proto file are wrapped in a single
   // outer class with the given name.  This applies to both Proto1
