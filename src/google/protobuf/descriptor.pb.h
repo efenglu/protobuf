@@ -220,6 +220,26 @@ inline bool FieldDescriptorProto_Label_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<FieldDescriptorProto_Label>(
     FieldDescriptorProto_Label_descriptor(), name, value);
 }
+enum FileOptions_JavaBeanStyle {
+  FileOptions_JavaBeanStyle_DEFAULT_INSTANCE = 1,
+  FileOptions_JavaBeanStyle_FAIL_FAST = 2,
+  FileOptions_JavaBeanStyle_NULL_CLEAR = 3
+};
+LIBPROTOBUF_EXPORT bool FileOptions_JavaBeanStyle_IsValid(int value);
+const FileOptions_JavaBeanStyle FileOptions_JavaBeanStyle_JavaBeanStyle_MIN = FileOptions_JavaBeanStyle_DEFAULT_INSTANCE;
+const FileOptions_JavaBeanStyle FileOptions_JavaBeanStyle_JavaBeanStyle_MAX = FileOptions_JavaBeanStyle_NULL_CLEAR;
+const int FileOptions_JavaBeanStyle_JavaBeanStyle_ARRAYSIZE = FileOptions_JavaBeanStyle_JavaBeanStyle_MAX + 1;
+
+LIBPROTOBUF_EXPORT const ::google::protobuf::EnumDescriptor* FileOptions_JavaBeanStyle_descriptor();
+inline const ::std::string& FileOptions_JavaBeanStyle_Name(FileOptions_JavaBeanStyle value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    FileOptions_JavaBeanStyle_descriptor(), value);
+}
+inline bool FileOptions_JavaBeanStyle_Parse(
+    const ::std::string& name, FileOptions_JavaBeanStyle* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<FileOptions_JavaBeanStyle>(
+    FileOptions_JavaBeanStyle_descriptor(), name, value);
+}
 enum FileOptions_OptimizeMode {
   FileOptions_OptimizeMode_SPEED = 1,
   FileOptions_OptimizeMode_CODE_SIZE = 2,
@@ -3092,6 +3112,34 @@ class LIBPROTOBUF_EXPORT FileOptions : public ::google::protobuf::Message /* @@p
 
   // nested types ----------------------------------------------------
 
+  typedef FileOptions_JavaBeanStyle JavaBeanStyle;
+  static const JavaBeanStyle DEFAULT_INSTANCE =
+    FileOptions_JavaBeanStyle_DEFAULT_INSTANCE;
+  static const JavaBeanStyle FAIL_FAST =
+    FileOptions_JavaBeanStyle_FAIL_FAST;
+  static const JavaBeanStyle NULL_CLEAR =
+    FileOptions_JavaBeanStyle_NULL_CLEAR;
+  static inline bool JavaBeanStyle_IsValid(int value) {
+    return FileOptions_JavaBeanStyle_IsValid(value);
+  }
+  static const JavaBeanStyle JavaBeanStyle_MIN =
+    FileOptions_JavaBeanStyle_JavaBeanStyle_MIN;
+  static const JavaBeanStyle JavaBeanStyle_MAX =
+    FileOptions_JavaBeanStyle_JavaBeanStyle_MAX;
+  static const int JavaBeanStyle_ARRAYSIZE =
+    FileOptions_JavaBeanStyle_JavaBeanStyle_ARRAYSIZE;
+  static inline const ::google::protobuf::EnumDescriptor*
+  JavaBeanStyle_descriptor() {
+    return FileOptions_JavaBeanStyle_descriptor();
+  }
+  static inline const ::std::string& JavaBeanStyle_Name(JavaBeanStyle value) {
+    return FileOptions_JavaBeanStyle_Name(value);
+  }
+  static inline bool JavaBeanStyle_Parse(const ::std::string& name,
+      JavaBeanStyle* value) {
+    return FileOptions_JavaBeanStyle_Parse(name, value);
+  }
+
   typedef FileOptions_OptimizeMode OptimizeMode;
   static const OptimizeMode SPEED =
     FileOptions_OptimizeMode_SPEED;
@@ -3437,6 +3485,13 @@ class LIBPROTOBUF_EXPORT FileOptions : public ::google::protobuf::Message /* @@p
   bool cc_enable_arenas() const;
   void set_cc_enable_arenas(bool value);
 
+  // optional .google.protobuf.FileOptions.JavaBeanStyle java_bean_style = 2 [default = DEFAULT_INSTANCE];
+  bool has_java_bean_style() const;
+  void clear_java_bean_style();
+  static const int kJavaBeanStyleFieldNumber = 2;
+  ::google::protobuf::FileOptions_JavaBeanStyle java_bean_style() const;
+  void set_java_bean_style(::google::protobuf::FileOptions_JavaBeanStyle value);
+
   // optional .google.protobuf.FileOptions.OptimizeMode optimize_for = 9 [default = SPEED];
   bool has_optimize_for() const;
   void clear_optimize_for();
@@ -3449,6 +3504,8 @@ class LIBPROTOBUF_EXPORT FileOptions : public ::google::protobuf::Message /* @@p
  private:
   void set_has_java_package();
   void clear_has_java_package();
+  void set_has_java_bean_style();
+  void clear_has_java_bean_style();
   void set_has_java_outer_classname();
   void clear_has_java_outer_classname();
   void set_has_java_multiple_files();
@@ -3516,6 +3573,7 @@ class LIBPROTOBUF_EXPORT FileOptions : public ::google::protobuf::Message /* @@p
   bool php_generic_services_;
   bool deprecated_;
   bool cc_enable_arenas_;
+  int java_bean_style_;
   int optimize_for_;
   friend struct ::protobuf_google_2fprotobuf_2fdescriptor_2eproto::TableStruct;
 };
@@ -9094,6 +9152,31 @@ inline void FileOptions::unsafe_arena_set_allocated_java_package(
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:google.protobuf.FileOptions.java_package)
 }
 
+// optional .google.protobuf.FileOptions.JavaBeanStyle java_bean_style = 2 [default = DEFAULT_INSTANCE];
+inline bool FileOptions::has_java_bean_style() const {
+  return (_has_bits_[0] & 0x00080000u) != 0;
+}
+inline void FileOptions::set_has_java_bean_style() {
+  _has_bits_[0] |= 0x00080000u;
+}
+inline void FileOptions::clear_has_java_bean_style() {
+  _has_bits_[0] &= ~0x00080000u;
+}
+inline void FileOptions::clear_java_bean_style() {
+  java_bean_style_ = 1;
+  clear_has_java_bean_style();
+}
+inline ::google::protobuf::FileOptions_JavaBeanStyle FileOptions::java_bean_style() const {
+  // @@protoc_insertion_point(field_get:google.protobuf.FileOptions.java_bean_style)
+  return static_cast< ::google::protobuf::FileOptions_JavaBeanStyle >(java_bean_style_);
+}
+inline void FileOptions::set_java_bean_style(::google::protobuf::FileOptions_JavaBeanStyle value) {
+  assert(::google::protobuf::FileOptions_JavaBeanStyle_IsValid(value));
+  set_has_java_bean_style();
+  java_bean_style_ = value;
+  // @@protoc_insertion_point(field_set:google.protobuf.FileOptions.java_bean_style)
+}
+
 // optional string java_outer_classname = 8;
 inline bool FileOptions::has_java_outer_classname() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
@@ -9256,13 +9339,13 @@ inline void FileOptions::set_java_string_check_utf8(bool value) {
 
 // optional .google.protobuf.FileOptions.OptimizeMode optimize_for = 9 [default = SPEED];
 inline bool FileOptions::has_optimize_for() const {
-  return (_has_bits_[0] & 0x00080000u) != 0;
+  return (_has_bits_[0] & 0x00100000u) != 0;
 }
 inline void FileOptions::set_has_optimize_for() {
-  _has_bits_[0] |= 0x00080000u;
+  _has_bits_[0] |= 0x00100000u;
 }
 inline void FileOptions::clear_has_optimize_for() {
-  _has_bits_[0] &= ~0x00080000u;
+  _has_bits_[0] &= ~0x00100000u;
 }
 inline void FileOptions::clear_optimize_for() {
   optimize_for_ = 1;
@@ -11888,6 +11971,11 @@ template <> struct is_proto_enum< ::google::protobuf::FieldDescriptorProto_Label
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::google::protobuf::FieldDescriptorProto_Label>() {
   return ::google::protobuf::FieldDescriptorProto_Label_descriptor();
+}
+template <> struct is_proto_enum< ::google::protobuf::FileOptions_JavaBeanStyle> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::google::protobuf::FileOptions_JavaBeanStyle>() {
+  return ::google::protobuf::FileOptions_JavaBeanStyle_descriptor();
 }
 template <> struct is_proto_enum< ::google::protobuf::FileOptions_OptimizeMode> : ::std::true_type {};
 template <>

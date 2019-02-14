@@ -26,6 +26,11 @@ class FileOptions extends \Google\Protobuf\Internal\Message
     private $java_package = '';
     private $has_java_package = false;
     /**
+     * Generated from protobuf field <code>optional .google.protobuf.FileOptions.JavaBeanStyle java_bean_style = 2 [default = DEFAULT_INSTANCE];</code>
+     */
+    private $java_bean_style = 0;
+    private $has_java_bean_style = false;
+    /**
      * If set, all the classes from the .proto file are wrapped in a single
      * outer class with the given name.  This applies to both Proto1
      * (equivalent to the old "--one_java_file" option) and Proto2 (where
@@ -211,6 +216,7 @@ class FileOptions extends \Google\Protobuf\Internal\Message
      *           placed.  By default, the proto package is used, but this is often
      *           inappropriate because proto packages do not normally start with backwards
      *           domain names.
+     *     @type int $java_bean_style
      *     @type string $java_outer_classname
      *           If set, all the classes from the .proto file are wrapped in a single
      *           outer class with the given name.  This applies to both Proto1
@@ -332,6 +338,34 @@ class FileOptions extends \Google\Protobuf\Internal\Message
     public function hasJavaPackage()
     {
         return $this->has_java_package;
+    }
+
+    /**
+     * Generated from protobuf field <code>optional .google.protobuf.FileOptions.JavaBeanStyle java_bean_style = 2 [default = DEFAULT_INSTANCE];</code>
+     * @return int
+     */
+    public function getJavaBeanStyle()
+    {
+        return $this->java_bean_style;
+    }
+
+    /**
+     * Generated from protobuf field <code>optional .google.protobuf.FileOptions.JavaBeanStyle java_bean_style = 2 [default = DEFAULT_INSTANCE];</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setJavaBeanStyle($var)
+    {
+        GPBUtil::checkEnum($var, \Google\Protobuf\Internal\FileOptions_JavaBeanStyle::class);
+        $this->java_bean_style = $var;
+        $this->has_java_bean_style = true;
+
+        return $this;
+    }
+
+    public function hasJavaBeanStyle()
+    {
+        return $this->has_java_bean_style;
     }
 
     /**

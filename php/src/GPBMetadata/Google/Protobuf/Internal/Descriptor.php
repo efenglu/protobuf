@@ -142,6 +142,7 @@ class Descriptor
 
         $pool->addMessage('google.protobuf.internal.FileOptions', \Google\Protobuf\Internal\FileOptions::class)
             ->optional('java_package', \Google\Protobuf\Internal\GPBType::STRING, 1)
+            ->optional('java_bean_style', \Google\Protobuf\Internal\GPBType::ENUM, 2, 'google.protobuf.internal.FileOptions.JavaBeanStyle')
             ->optional('java_outer_classname', \Google\Protobuf\Internal\GPBType::STRING, 8)
             ->optional('java_multiple_files', \Google\Protobuf\Internal\GPBType::BOOL, 10)
             ->optional('java_generate_equals_and_hash', \Google\Protobuf\Internal\GPBType::BOOL, 20)
@@ -162,6 +163,12 @@ class Descriptor
             ->optional('php_metadata_namespace', \Google\Protobuf\Internal\GPBType::STRING, 44)
             ->optional('ruby_package', \Google\Protobuf\Internal\GPBType::STRING, 45)
             ->repeated('uninterpreted_option', \Google\Protobuf\Internal\GPBType::MESSAGE, 999, 'google.protobuf.internal.UninterpretedOption')
+            ->finalizeToPool();
+
+        $pool->addEnum('google.protobuf.internal.FileOptions.JavaBeanStyle', \Google\Protobuf\Internal\JavaBeanStyle::class)
+            ->value("DEFAULT_INSTANCE", 1)
+            ->value("FAIL_FAST", 2)
+            ->value("NULL_CLEAR", 3)
             ->finalizeToPool();
 
         $pool->addEnum('google.protobuf.internal.FileOptions.OptimizeMode', \Google\Protobuf\Internal\OptimizeMode::class)
