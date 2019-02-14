@@ -176,10 +176,26 @@ GenerateMembers(io::Printer* printer) const {
       "}\n");
     printer->Annotate("{", "}", descriptor_);
     WriteFieldDocComment(printer, descriptor_);
-    printer->Print(variables_,
-      "$deprecation$public $type$ ${$get$capitalized_name$$}$() {\n"
-      "  return $name$_ == null ? $type$.getDefaultInstance() : $name$_;\n"
-      "}\n");
+    if (HasBeanStyleNullClear(descriptor_)) {
+        printer->Print(variables_,
+          "$deprecation$public $type$ ${$get$capitalized_name$$}$() {\n"
+          "  return $name$_;\n"
+          "}\n");
+    } else if (HasBeanStyleFailFast(descriptor_)) {
+        printer->Print(variables_,
+          "$deprecation$public $type$ ${$get$capitalized_name$$}$() {\n"
+          "  if ($name$_ == null) {\n"
+          "    throw new NullPointerException(\"'$name$' is not set\");\n"
+          "  } else {\n"
+          "     return $name$_;\n"
+          "  }\n"
+          "}\n");
+    } else {
+        printer->Print(variables_,
+          "$deprecation$public $type$ ${$get$capitalized_name$$}$() {\n"
+          "  return $name$_ == null ? $type$.getDefaultInstance() : $name$_;\n"
+          "}\n");
+    }
     printer->Annotate("{", "}", descriptor_);
 
     WriteFieldDocComment(printer, descriptor_);
@@ -197,10 +213,26 @@ GenerateMembers(io::Printer* printer) const {
       "}\n");
     printer->Annotate("{", "}", descriptor_);
     WriteFieldDocComment(printer, descriptor_);
-    printer->Print(variables_,
-      "$deprecation$public $type$ ${$get$capitalized_name$$}$() {\n"
-      "  return $name$_ == null ? $type$.getDefaultInstance() : $name$_;\n"
-      "}\n");
+    if (HasBeanStyleNullClear(descriptor_)) {
+            printer->Print(variables_,
+              "$deprecation$public $type$ ${$get$capitalized_name$$}$() {\n"
+              "  return $name$_;\n"
+              "}\n");
+    } else if (HasBeanStyleFailFast(descriptor_)) {
+        printer->Print(variables_,
+          "$deprecation$public $type$ ${$get$capitalized_name$$}$() {\n"
+          "  if ($name$_ == null) {\n"
+          "     throw new NullPointerException(\"'$name$' is not set\");\n"
+          "  } else {\n"
+          "     return $name$_;\n"
+          "  }\n"
+          "}\n");
+    } else {
+        printer->Print(variables_,
+          "$deprecation$public $type$ ${$get$capitalized_name$$}$() {\n"
+          "  return $name$_ == null ? $type$.getDefaultInstance() : $name$_;\n"
+          "}\n");
+    }
     printer->Annotate("{", "}", descriptor_);
 
     WriteFieldDocComment(printer, descriptor_);
@@ -293,19 +325,34 @@ GenerateBuilderMembers(io::Printer* printer) const {
 
   // Field.Builder setField(Field value)
   WriteFieldDocComment(printer, descriptor_);
-  PrintNestedBuilderFunction(printer,
-    "$deprecation$public Builder ${$set$capitalized_name$$}$($type$ value)",
+  if (HasBeanStyleNullClear(descriptor_)) {
+      PrintNestedBuilderFunction(printer,
+        "$deprecation$public Builder ${$set$capitalized_name$$}$($type$ value)",
+        "if (value == null) {\n"
+        "  ${$clear$capitalized_name$$}$();\n"
+        "  return this;\n"
+        "}\n"
+        "$name$_ = value;\n"
+        "$on_changed$\n",
 
-    "if (value == null) {\n"
-    "  throw new NullPointerException();\n"
-    "}\n"
-    "$name$_ = value;\n"
-    "$on_changed$\n",
+        "$name$Builder_.setMessage(value);\n",
 
-    "$name$Builder_.setMessage(value);\n",
+        "$set_has_field_bit_builder$\n"
+        "return this;\n");
+    } else {
+     PrintNestedBuilderFunction(printer,
+        "$deprecation$public Builder ${$set$capitalized_name$$}$($type$ value)",
+        "if (value == null) {\n"
+        "  throw new NullPointerException(\"'$name$' must not be null\");\n"
+        "}\n"
+        "$name$_ = value;\n"
+        "$on_changed$\n",
 
-    "$set_has_field_bit_builder$\n"
-    "return this;\n");
+        "$name$Builder_.setMessage(value);\n",
+
+        "$set_has_field_bit_builder$\n"
+        "return this;\n");
+    }
 
   // Field.Builder setField(Field.Builder builderForValue)
   WriteFieldDocComment(printer, descriptor_);
@@ -610,19 +657,37 @@ GenerateBuilderMembers(io::Printer* printer) const {
 
   // Field.Builder setField(Field value)
   WriteFieldDocComment(printer, descriptor_);
-  PrintNestedBuilderFunction(printer,
-    "$deprecation$public Builder ${$set$capitalized_name$$}$($type$ value)",
+  if (HasBeanStyleNullClear(descriptor_)) {
+      PrintNestedBuilderFunction(printer,
+          "$deprecation$public Builder ${$set$capitalized_name$$}$($type$ value)",
 
-    "if (value == null) {\n"
-    "  throw new NullPointerException();\n"
-    "}\n"
-    "$oneof_name$_ = value;\n"
-    "$on_changed$\n",
+          "if (value == null) {\n"
+          "  ${$clear$capitalized_name$$}$();\n"
+          "} else {\n"
+          "  $oneof_name$_ = value;\n"
+          "  $on_changed$\n",
 
-    "$name$Builder_.setMessage(value);\n",
+          "  $name$Builder_.setMessage(value);\n",
 
-    "$set_oneof_case_message$;\n"
-    "return this;\n");
+          "  $set_oneof_case_message$;\n"
+          "}\n"
+          "return this;\n");
+  } else {
+      PrintNestedBuilderFunction(printer,
+          "$deprecation$public Builder ${$set$capitalized_name$$}$($type$ value)",
+
+          "if (value == null) {\n"
+              "  throw new NullPointerException(\"'$name$' must not be null\");\n"
+          "}\n"
+          "$oneof_name$_ = value;\n"
+          "$on_changed$\n",
+
+          "$name$Builder_.setMessage(value);\n",
+
+          "$set_oneof_case_message$;\n"
+          "return this;\n");
+  }
+
 
   // Field.Builder setField(Field.Builder builderForValue)
   WriteFieldDocComment(printer, descriptor_);
@@ -993,7 +1058,7 @@ GenerateBuilderMembers(io::Printer* printer) const {
     "$deprecation$public Builder ${$set$capitalized_name$$}$(\n"
     "    int index, $type$ value)",
     "if (value == null) {\n"
-    "  throw new NullPointerException();\n"
+    "  throw new NullPointerException(\"'$name$' must not be null\");\n"
     "}\n"
     "ensure$capitalized_name$IsMutable();\n"
     "$name$_.set(index, value);\n"
@@ -1021,7 +1086,7 @@ GenerateBuilderMembers(io::Printer* printer) const {
     "$deprecation$public Builder ${$add$capitalized_name$$}$($type$ value)",
 
     "if (value == null) {\n"
-    "  throw new NullPointerException();\n"
+    "  throw new NullPointerException(\"'$name$must not be null\");\n"
     "}\n"
     "ensure$capitalized_name$IsMutable();\n"
     "$name$_.add(value);\n"
@@ -1039,7 +1104,7 @@ GenerateBuilderMembers(io::Printer* printer) const {
     "    int index, $type$ value)",
 
     "if (value == null) {\n"
-    "  throw new NullPointerException();\n"
+    "  throw new NullPointerException(\"'$name$' must not be null\");\n"
     "}\n"
     "ensure$capitalized_name$IsMutable();\n"
     "$name$_.add(index, value);\n"
