@@ -338,7 +338,10 @@ GenerateBuilderMembers(io::Printer* printer) const {
   printer->Print(variables_,
     "$deprecation$public Builder ${$set$capitalized_name$$}$(\n"
     "    java.lang.String value) {\n"
-    "$null_check$"
+    "  if (value == null) {\n"
+    "    ${$clear$capitalized_name$$}$();\n"
+    "    return this;\n"
+    "  }\n"
     "  $set_has_field_bit_builder$\n"
     "  $name$_ = value;\n"
     "  $on_changed$\n"
@@ -363,7 +366,10 @@ GenerateBuilderMembers(io::Printer* printer) const {
   printer->Print(variables_,
     "$deprecation$public Builder ${$set$capitalized_name$Bytes$}$(\n"
     "    com.google.protobuf.ByteString value) {\n"
-    "$null_check$");
+    "  if (value == null) {\n"
+    "    ${$clear$capitalized_name$$}$();\n"
+    "    return this;\n"
+    "  }\n");
   printer->Annotate("{", "}", descriptor_);
   if (CheckUtf8(descriptor_)) {
     printer->Print(variables_,
@@ -631,7 +637,10 @@ GenerateBuilderMembers(io::Printer* printer) const {
   printer->Print(variables_,
     "$deprecation$public Builder ${$set$capitalized_name$$}$(\n"
     "    java.lang.String value) {\n"
-    "$null_check$"
+    "  if (value == null) {\n"
+    "    ${$clear$capitalized_name$$}$();\n"
+    "    return this;\n"
+    "  }\n"
     "  $set_oneof_case_message$;\n"
     "  $oneof_name$_ = value;\n"
     "  $on_changed$\n"
@@ -654,7 +663,10 @@ GenerateBuilderMembers(io::Printer* printer) const {
   printer->Print(variables_,
     "$deprecation$public Builder ${$set$capitalized_name$Bytes$}$(\n"
     "    com.google.protobuf.ByteString value) {\n"
-    "$null_check$");
+    "  if (value == null) {\n"
+    "    ${$clear$capitalized_name$$}$();\n"
+    "    return this;\n"
+    "  }\n");
   printer->Annotate("{", "}", descriptor_);
   if (CheckUtf8(descriptor_)) {
     printer->Print(variables_,
