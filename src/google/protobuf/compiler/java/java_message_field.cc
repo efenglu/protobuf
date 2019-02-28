@@ -622,17 +622,15 @@ GenerateBuilderMembers(io::Printer* printer) const {
     "$deprecation$public Builder ${$set$capitalized_name$$}$($type$ value)",
 
     "if (value == null) {\n"
-    "  ${$clear$capitalized_name$$}$();\n"
-    "} else {\n"
-    "  $oneof_name$_ = value;\n"
-    "  $on_changed$\n",
-
-    "  $name$Builder_.setMessage(value);\n",
-
-    "  $set_oneof_case_message$;\n"
+    "  throw new NullPointerException();\n"
     "}\n"
-    "return this;\n");
+    "$oneof_name$_ = value;\n"
+    "$on_changed$\n",
 
+    "$name$Builder_.setMessage(value);\n",
+
+    "$set_oneof_case_message$;\n"
+    "return this;\n");
 
   // Field.Builder setField(Field.Builder builderForValue)
   WriteFieldDocComment(printer, descriptor_);

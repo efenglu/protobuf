@@ -210,8 +210,7 @@ GenerateMembers(io::Printer* printer) const {
           "  return $name$_;\n"
           "}\n");
       }
-
-  printer->Annotate("{", "}", descriptor_);
+      printer->Annotate("{", "}", descriptor_);
 }
 
 void ImmutablePrimitiveFieldGenerator::

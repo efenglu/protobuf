@@ -222,6 +222,7 @@ GenerateMembers(io::Printer* printer) const {
       "}\n");
     printer->Annotate("{", "}", descriptor_);
 
+    WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
           "$deprecation$public java.lang.String ${$get$capitalized_name$$}$() {\n"
           "  if (!${$has$capitalized_name$$}$()) {\n"
@@ -234,6 +235,7 @@ GenerateMembers(io::Printer* printer) const {
           "    com.google.protobuf.ByteString bs = \n"
           "        (com.google.protobuf.ByteString) ref;\n"
             "    java.lang.String s = bs.toStringUtf8();\n");
+    printer->Annotate("{", "}", descriptor_);
   } else {
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
@@ -245,9 +247,9 @@ GenerateMembers(io::Printer* printer) const {
         "    com.google.protobuf.ByteString bs = \n"
         "        (com.google.protobuf.ByteString) ref;\n"
           "    java.lang.String s = bs.toStringUtf8();\n");
+    printer->Annotate("{", "}", descriptor_);
   }
 
-  printer->Annotate("{", "}", descriptor_);
   if (CheckUtf8(descriptor_)) {
     printer->Print(variables_,
       "    $name$_ = s;\n");
