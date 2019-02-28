@@ -221,18 +221,32 @@ GenerateMembers(io::Printer* printer) const {
       "  return $get_has_field_bit_message$;\n"
       "}\n");
     printer->Annotate("{", "}", descriptor_);
+
+    printer->Print(variables_,
+          "$deprecation$public java.lang.String ${$get$capitalized_name$$}$() {\n"
+          "  if (!${$has$capitalized_name$$}$()) {\n"
+          "    throw new NullPointerException(\"'$name$' is not set\");\n"
+          "  }\n"
+          "  java.lang.Object ref = $name$_;\n"
+          "  if (ref instanceof java.lang.String) {\n"
+          "    return (java.lang.String) ref;\n"
+          "  } else {\n"
+          "    com.google.protobuf.ByteString bs = \n"
+          "        (com.google.protobuf.ByteString) ref;\n"
+            "    java.lang.String s = bs.toStringUtf8();\n");
+  } else {
+    WriteFieldDocComment(printer, descriptor_);
+    printer->Print(variables_,
+        "$deprecation$public java.lang.String ${$get$capitalized_name$$}$() {\n"
+        "  java.lang.Object ref = $name$_;\n"
+        "  if (ref instanceof java.lang.String) {\n"
+        "    return (java.lang.String) ref;\n"
+        "  } else {\n"
+        "    com.google.protobuf.ByteString bs = \n"
+        "        (com.google.protobuf.ByteString) ref;\n"
+          "    java.lang.String s = bs.toStringUtf8();\n");
   }
 
-  WriteFieldDocComment(printer, descriptor_);
-  printer->Print(variables_,
-    "$deprecation$public java.lang.String ${$get$capitalized_name$$}$() {\n"
-    "  java.lang.Object ref = $name$_;\n"
-    "  if (ref instanceof java.lang.String) {\n"
-    "    return (java.lang.String) ref;\n"
-    "  } else {\n"
-    "    com.google.protobuf.ByteString bs = \n"
-    "        (com.google.protobuf.ByteString) ref;\n"
-      "    java.lang.String s = bs.toStringUtf8();\n");
   printer->Annotate("{", "}", descriptor_);
   if (CheckUtf8(descriptor_)) {
     printer->Print(variables_,

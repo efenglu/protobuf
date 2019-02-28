@@ -194,13 +194,23 @@ GenerateMembers(io::Printer* printer) const {
       "  return $get_has_field_bit_message$;\n"
       "}\n");
     printer->Annotate("{", "}", descriptor_);
-  }
 
-  WriteFieldDocComment(printer, descriptor_);
-  printer->Print(variables_,
-    "$deprecation$public $type$ ${$get$capitalized_name$$}$() {\n"
-    "  return $name$_;\n"
-    "}\n");
+    WriteFieldDocComment(printer, descriptor_);
+      printer->Print(variables_,
+        "$deprecation$public $type$ ${$get$capitalized_name$$}$() {\n"
+        "  if (!${$has$capitalized_name$$}$()) {\n"
+        "    throw new NullPointerException(\"'$name$' is not set\");\n"
+        "  }\n"
+        "  return $name$_;\n"
+        "}\n");
+  } else {
+      WriteFieldDocComment(printer, descriptor_);
+        printer->Print(variables_,
+          "$deprecation$public $type$ ${$get$capitalized_name$$}$() {\n"
+          "  return $name$_;\n"
+          "}\n");
+      }
+
   printer->Annotate("{", "}", descriptor_);
 }
 
