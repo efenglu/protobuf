@@ -187,6 +187,7 @@ GenerateMembers(io::Printer* printer) const {
   printer->Print(variables_,
     "private $field_type$ $name$_;\n");
   PrintExtraFieldInfo(variables_, printer);
+  bool checkedReturn = false;
   if (SupportFieldPresence(descriptor_->file())) {
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
@@ -195,6 +196,13 @@ GenerateMembers(io::Printer* printer) const {
       "}\n");
     printer->Annotate("{", "}", descriptor_);
 
+    JavaType type = GetJavaType(descriptor_);
+    if (type == JAVATYPE_STRING) {
+      checkedReturn = true;
+    }
+  }
+
+  if (checkedReturn) {
     WriteFieldDocComment(printer, descriptor_);
       printer->Print(variables_,
         "$deprecation$public $type$ ${$get$capitalized_name$$}$() {\n"
@@ -209,8 +217,9 @@ GenerateMembers(io::Printer* printer) const {
           "$deprecation$public $type$ ${$get$capitalized_name$$}$() {\n"
           "  return $name$_;\n"
           "}\n");
-      }
-      printer->Annotate("{", "}", descriptor_);
+  }
+
+  printer->Annotate("{", "}", descriptor_);
 }
 
 void ImmutablePrimitiveFieldGenerator::
