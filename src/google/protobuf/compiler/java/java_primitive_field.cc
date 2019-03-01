@@ -255,7 +255,7 @@ GenerateBuilderMembers(io::Printer* printer) const {
     // The default value is not a simple literal so we want to avoid executing
     // it multiple times.  Instead, get the default out of the default instance.
     printer->Print(variables_,
-      "  $name$_ = getDefaultInstance().get$capitalized_name$();\n");
+      "  $name$_ = getDefaultInstance().$name$_;\n");
   } else {
     printer->Print(variables_,
       "  $name$_ = $default$;\n");
