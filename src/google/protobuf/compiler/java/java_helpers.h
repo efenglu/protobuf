@@ -347,7 +347,7 @@ bool HasRequiredFields(const Descriptor* descriptor);
 
 // Whether a .proto file supports field presence test for non-message types.
 inline bool SupportFieldPresence(const FileDescriptor* descriptor) {
-  return true;
+  return descriptor->syntax() != FileDescriptor::SYNTAX_PROTO3;
 }
 
 // Whether generate classes expose public PARSER instances.
@@ -387,22 +387,7 @@ inline bool CheckUtf8(const FieldDescriptor* descriptor) {
       descriptor->file()->options().java_string_check_utf8();
 }
 
-inline bool HasBeanStyleFailFast(const FieldDescriptor* descriptor) {
-  return descriptor->file()->options().java_bean_style() ==
-             FileOptions::FAIL_FAST;
-}
-
-inline bool HasBeanStyleNullClear(const FieldDescriptor* descriptor) {
-  return descriptor->file()->options().java_bean_style() ==
-             FileOptions::NULL_CLEAR;
-}
-
-inline bool HasBeanStyleDefaultInstance(const FieldDescriptor* descriptor) {
-  return descriptor->file()->options().java_bean_style() ==
-             FileOptions::DEFAULT_INSTANCE;
-}
-
-inline std::string GeneratedCodeVersionSuffix() {
+inline string GeneratedCodeVersionSuffix() {
   return "V3";
 }
 
