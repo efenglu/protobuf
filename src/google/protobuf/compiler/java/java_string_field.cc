@@ -221,22 +221,7 @@ GenerateMembers(io::Printer* printer) const {
       "  return $get_has_field_bit_message$;\n"
       "}\n");
     printer->Annotate("{", "}", descriptor_);
-
-    WriteFieldDocComment(printer, descriptor_);
-    printer->Print(variables_,
-          "$deprecation$public java.lang.String ${$get$capitalized_name$$}$() {\n"
-          "  if (!${$has$capitalized_name$$}$()) {\n"
-          "    throw new NullPointerException(\"'$name$' is not set\");\n"
-          "  }\n"
-          "  java.lang.Object ref = $name$_;\n"
-          "  if (ref instanceof java.lang.String) {\n"
-          "    return (java.lang.String) ref;\n"
-          "  } else {\n"
-          "    com.google.protobuf.ByteString bs = \n"
-          "        (com.google.protobuf.ByteString) ref;\n"
-            "    java.lang.String s = bs.toStringUtf8();\n");
-    printer->Annotate("{", "}", descriptor_);
-  } else {
+  }
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
         "$deprecation$public java.lang.String ${$get$capitalized_name$$}$() {\n"
@@ -248,7 +233,6 @@ GenerateMembers(io::Printer* printer) const {
         "        (com.google.protobuf.ByteString) ref;\n"
           "    java.lang.String s = bs.toStringUtf8();\n");
     printer->Annotate("{", "}", descriptor_);
-  }
 
   if (CheckUtf8(descriptor_)) {
     printer->Print(variables_,
@@ -358,7 +342,7 @@ GenerateBuilderMembers(io::Printer* printer) const {
   // The default value is not a simple literal so we want to avoid executing
   // it multiple times.  Instead, get the default out of the default instance.
   printer->Print(variables_,
-    "  $name$_ = getDefaultInstance().$name$_;\n");
+    "  $name$_ = getDefaultInstance().get$capitalized_name$();\n");
   printer->Print(variables_,
     "  $on_changed$\n"
     "  return this;\n"

@@ -187,7 +187,6 @@ GenerateMembers(io::Printer* printer) const {
   printer->Print(variables_,
     "private $field_type$ $name$_;\n");
   PrintExtraFieldInfo(variables_, printer);
-  bool checkedReturn = false;
   if (SupportFieldPresence(descriptor_->file())) {
     WriteFieldDocComment(printer, descriptor_);
     printer->Print(variables_,
@@ -195,30 +194,13 @@ GenerateMembers(io::Printer* printer) const {
       "  return $get_has_field_bit_message$;\n"
       "}\n");
     printer->Annotate("{", "}", descriptor_);
-
-    JavaType type = GetJavaType(descriptor_);
-    if (type == JAVATYPE_STRING) {
-      checkedReturn = true;
-    }
   }
 
-  if (checkedReturn) {
     WriteFieldDocComment(printer, descriptor_);
       printer->Print(variables_,
         "$deprecation$public $type$ ${$get$capitalized_name$$}$() {\n"
-        "  if (!${$has$capitalized_name$$}$()) {\n"
-        "    throw new NullPointerException(\"'$name$' is not set\");\n"
-        "  }\n"
         "  return $name$_;\n"
         "}\n");
-  } else {
-      WriteFieldDocComment(printer, descriptor_);
-        printer->Print(variables_,
-          "$deprecation$public $type$ ${$get$capitalized_name$$}$() {\n"
-          "  return $name$_;\n"
-          "}\n");
-  }
-
   printer->Annotate("{", "}", descriptor_);
 }
 
@@ -264,7 +246,7 @@ GenerateBuilderMembers(io::Printer* printer) const {
     // The default value is not a simple literal so we want to avoid executing
     // it multiple times.  Instead, get the default out of the default instance.
     printer->Print(variables_,
-      "  $name$_ = getDefaultInstance().$name$_;\n");
+      "  $name$_ = getDefaultInstance().get$capitalized_name$();\n");
   } else {
     printer->Print(variables_,
       "  $name$_ = $default$;\n");

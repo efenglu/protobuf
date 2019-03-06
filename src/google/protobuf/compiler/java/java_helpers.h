@@ -347,7 +347,7 @@ bool HasRequiredFields(const Descriptor* descriptor);
 
 // Whether a .proto file supports field presence test for non-message types.
 inline bool SupportFieldPresence(const FileDescriptor* descriptor) {
-  return descriptor->syntax() != FileDescriptor::SYNTAX_PROTO3;
+  return true;
 }
 
 // Whether generate classes expose public PARSER instances.
